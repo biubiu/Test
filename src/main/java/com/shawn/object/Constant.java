@@ -1,4 +1,4 @@
-package com.shawn.Object;
+package com.shawn.object;
 
 /**
  * Created with IntelliJ IDEA.
