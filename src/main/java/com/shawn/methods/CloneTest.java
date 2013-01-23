@@ -20,25 +20,27 @@ public class CloneTest {
     public static void main(String[] args) {
         ShallowCloneSample s1 = new ShallowCloneSample(10, "james");
         ShallowCloneSample s2 = (ShallowCloneSample) s1.clone();
-        System.out.println( s1.toString() + "| " + s2.toString());
-        System.out.println("equals: "+s1.equals(s2) + " class:" + (s1.getClass()==s2.getClass()) );
+        /*System.out.println( s1.toString() + "| " + s2.toString());
+        System.out.println("equals: "+s1.equals(s2) + " class:" + (s1.getClass()==s2.getClass()) );*/
 
         final StringBuilder sb = new StringBuilder();
 
         DeepCloneInner dci1 = new DeepCloneInner();
         Calendar c1 = Calendar.getInstance();
         c1.set(1987, 2, 24);
-        s2 = new ShallowCloneSample(20, "Kent");
+        s1.setAge(200);
         LinkedList<ShallowCloneSample> ls1 = Lists.newLinkedList(Arrays.asList(s1,s2));
         dci1.setCalendar(c1);
         dci1.setSamples(ls1);
         //with shallow copy of s1, since refer of s2 to s1 is not changed ,so s2 is still the same value as s1
-
-
         DeepCloneSample ds1 = new DeepCloneSample();
         ds1.setNames(sb.append("ds1"));
         ds1.setInner(dci1);
+        DeepCloneSample ds2 = (DeepCloneSample)ds1.clone();
+
+        ds2.getInner().getSamples().get(0).setName("Tommy");
         System.out.println(ds1.getInner().getSamples().toString());
+        System.out.println(ds2.getInner().getSamples().toString());
     }
 
 
@@ -74,7 +76,7 @@ class ShallowCloneSample implements Cloneable ,Serializable{
     }
 
     //shallow copy
-/*    @Override
+    @Override
     protected Object clone(){
         Object object = null;
         try{
@@ -83,9 +85,9 @@ class ShallowCloneSample implements Cloneable ,Serializable{
 
         }
         return object;
-    }*/
+    }
 
-    @Override
+    /*@Override
     protected Object clone(){
         Object object = null;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -109,14 +111,18 @@ class ShallowCloneSample implements Cloneable ,Serializable{
             e.printStackTrace();
         }
         return object;
-    }
+    }*/
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
 }
 
-class DeepCloneSample implements Cloneable{
+class DeepCloneSample implements Cloneable,Serializable{
+    /**
+     *
+     */
+    private static final long serialVersionUID = -6330713682745426658L;
     private DeepCloneInner inner;
     private StringBuilder names;
 
@@ -136,7 +142,8 @@ class DeepCloneSample implements Cloneable{
         this.names = names;
     }
 
-    static class DeepCloneInner {
+    static class DeepCloneInner implements Serializable {
+        private static final long serialVersionUID = -3406600866943723451L;
         private LinkedList<ShallowCloneSample> samples;
         private Calendar calendar;
 
@@ -165,9 +172,24 @@ class DeepCloneSample implements Cloneable{
     @Override
     protected Object clone(){
         Object object = null;
-        try{
-            object = super.clone();
-        }catch(CloneNotSupportedException e){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ByteArrayInputStream bais =null;
+        ObjectOutputStream oos = null;
+        try {
+            oos = new ObjectOutputStream(baos);
+            oos.writeObject(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        bais= new ByteArrayInputStream(baos.toByteArray());
+        ObjectInputStream ois = null;
+        try {
+            ois = new ObjectInputStream(bais);
+            object = ois.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return object;
