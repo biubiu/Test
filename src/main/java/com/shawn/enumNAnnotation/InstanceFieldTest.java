@@ -1,4 +1,4 @@
-package com.shawn.generic;
+package com.shawn.enumNAnnotation;
 
 /**
  * Created with IntelliJ IDEA.

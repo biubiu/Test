@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 /**
  * PECS: producer-extends,consumer-super
- *
+ *	e.g:comparable --consumers: Comparable<? super T>
+ *		Comparator<? super T>
  *
  */
 public class UnboundWildcardTest {
@@ -26,11 +28,9 @@ public class UnboundWildcardTest {
         //Set<Number> mergeSets = union(intSets, doubleSets);
         Set<Number> mergeSets = WildcardStack.<Number>unionbyWildcard(intSets, doubleSets);
     }
-
-
 }
 
-class WildcardStack<T> extends Stack<T>{
+ class WildcardStack<T> extends Stack<T>{
     public void pushAllByWildcard(Iterable<? extends T> src) {
         for (T t:src) {
             push(t);
@@ -54,4 +54,6 @@ class WildcardStack<T> extends Stack<T>{
         result.addAll(s2);
         return result;
      }
-}
+
+    //abstract static  <T extends Comparable<? super T>> T max(List<? extends T> list);
+    }

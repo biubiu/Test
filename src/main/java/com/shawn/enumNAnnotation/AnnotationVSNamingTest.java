@@ -1,4 +1,4 @@
-package com.shawn.generic;
+package com.shawn.enumNAnnotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
