@@ -6,6 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 import org.junit.Test;
 
@@ -55,6 +58,12 @@ public class AnnotationVSNamingTest {
     public static void e3() {
     }
 
+    @ExceptionTest({IndexOutOfBoundsException.class,NullPointerException.class})
+    public static void doubleWrong(){
+        List<String> list = new ArrayList<String>();
+        list.addAll(5,null);
+    }
+
     public static void testExceptionAnnotation() {
         int tests = 0;
         int passed = 0;
@@ -67,17 +76,26 @@ public class AnnotationVSNamingTest {
                     System.out.printf("Test %s failed: no exception%n" ,m);
                 } catch (InvocationTargetException e) {
                     Throwable t = e.getCause();
-                    Class<? extends Exception> excType = m.getAnnotation(ExceptionTest.class).value();
-                    if(excType.isInstance(t)){
-                        passed++;
-                    }else{
-                        System.out.printf("Test %s failed: expected %s ,got %s%n", m, excType.getName(),t);
+                    Class<? extends Exception>[] excTypes = m.getAnnotation(ExceptionTest.class).value();
+                    int oldPassed = passed;
+                    for(Class<? extends Exception> ex:excTypes){
+                        if(ex.isInstance(t)){
+                            passed++;
+                            break;
+                        }
                     }
+                    if(passed==oldPassed){
+                        System.out.printf("Test %s failed: %s %n",m,t);
+                    }
+                   /*else{
+                        System.out.printf("Test %s failed: expected %s ,got %s%n", m, excType.getName(),t);
+                    }*/
                 }catch (Exception e) {
                     System.out.println("Invalid @Test: " + m);
                 }
             }
         }
+
         System.out.printf("Passed:%d, failed:%d%n", passed, tests - passed);
     }
 
@@ -120,5 +138,5 @@ public class AnnotationVSNamingTest {
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 @interface ExceptionTest {
-    Class<? extends Exception> value();
+    Class<? extends Exception>[] value();
 }
