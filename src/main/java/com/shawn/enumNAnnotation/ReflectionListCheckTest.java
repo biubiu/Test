@@ -17,9 +17,9 @@ public class ReflectionListCheckTest {
 
         // set model from rest
         User resume = new User();
-       // resume.setEmail("fzxwolf@sina.com");
-        resume.setUserName("fzx");
-        resume.setPassword("123456");
+         //resume.setEmail("fzxwolf@sina.com");
+      //  resume.setUserName("fzx");
+      //  resume.setPassword("123456");
 
         User.Work work1 = new User.Work();
         work1.setName("work1");
