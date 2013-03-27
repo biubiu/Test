@@ -2,6 +2,7 @@ package com.shawn.enumNAnnotation;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -27,14 +28,14 @@ public class ReflectionListCheckTest {
         User.Work work1 = new User.Work();
         work1.setName("work1");
         work1.setPosition("position1");
-        work1.setStart(13000000l);
-        work1.setEnd(12000000l);
+        work1.setStart(new Date());
+        work1.setEnd(new Date());
 
         User.Work work2 = new User.Work();
         work2.setName("work2");
         work2.setPosition("position2");
-        work2.setStart(13000000l);
-        work1.setEnd(12000000l);
+        work2.setStart(new Date());
+        work1.setEnd(new Date());
 
         List<User.Work> works = new ArrayList<User.Work>();
         works.add(work1);
@@ -42,15 +43,15 @@ public class ReflectionListCheckTest {
 
         User.Edu edu1 = new User.Edu();
         edu1.setName("edu1");
-        edu1.setDegree("degree1");
-        edu1.setStart(1300000l);
-        edu1.setEnd(1200000l);
+        edu1.setDegree(3);
+        edu1.setStart(new Date());
+        edu1.setEnd(new Date());
 
         User.Edu edu2 = new User.Edu();
-        //edu2.setName("edu2");
-        //edu2.setDegree("degree2");
-        edu2.setStart(1300000l);
-        edu2.setEnd(120000l);
+        edu2.setName("edu2");
+        edu2.setDegree(2);
+        edu2.setStart(new Date());
+        edu2.setEnd(new Date());
 
         List<User.Edu> edus = new ArrayList<User.Edu>();
         edus.add(edu1);
@@ -85,13 +86,18 @@ public class ReflectionListCheckTest {
                                      e.setAccessible(true);
                                     Class<?> clazzs = e.getAnnotation(CheckValue.class).value();
                                   //  for (Class<?> claz : clazzs) {
-
                                         if (clazzs.equals(String.class)&&Strings.isNullOrEmpty((String)e.get(object))){
                                             System.out.println(".........." +e.get(object)+" | " + e.getName());
                                             sb.append(object.getClass().getSimpleName()).append(":").append(FailReason.getReason(FailReason.valueOf(e.getName())));
                                             iterator.remove();
                                             break;
-                                        }else if(clazzs.getClass().equals(Long.class)&&e.get(object)==null){
+                                        }else if(clazzs == Integer.class&& (e.get(object) == null || (Integer)e.get(object) ==0)){
+                                            System.out.println( object.getClass() + " | " + e.getName()+" |"+e.get(object));
+                                            sb.append(object.getClass().getSimpleName()).append(":").append(FailReason.getReason(FailReason.valueOf(e.getName())));
+                                            iterator.remove();
+                                            break;
+                                        }
+                                        else if((clazzs==Date.class)&&e.get(object)==null){
                                             ++count;
                                             if(count>1){
                                                 System.out.println("count.." +count+" | " +object.getClass() + " | " + e.getName());

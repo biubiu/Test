@@ -75,10 +75,10 @@ public class User {
         private String name;
         @CheckValue(String.class)
         private String position;
-        @CheckValue(Long.class)
-        private Long start;
-        @CheckValue(Long.class)
-        private Long end;
+        @CheckValue(Date.class)
+        private Date start;
+        @CheckValue(Date.class)
+        private Date end;
         public String getName() {
             return name;
         }
@@ -91,16 +91,16 @@ public class User {
         public void setPosition(String position) {
             this.position = position;
         }
-        public Long getStart() {
+        public Date getStart() {
             return start;
         }
-        public void setStart(Long start) {
+        public void setStart(Date start) {
             this.start = start;
         }
-        public Long getEnd() {
+        public Date getEnd() {
             return end;
         }
-        public void setEnd(Long end) {
+        public void setEnd(Date end) {
             this.end = end;
         }
         @Override
@@ -114,34 +114,34 @@ public class User {
     public static class Edu{
         @CheckValue(String.class)
         private String name;
-        @CheckValue(String.class)
-        private String degree;
-        @CheckValue(Long.class)
-        private Long start;
-        @CheckValue(Long.class)
-        private Long end;
+        @CheckValue(Integer.class)
+        private Integer degree;
+        @CheckValue(Date.class)
+        private Date start;
+        @CheckValue(Date.class)
+        private Date end;
         public String getName() {
             return name;
         }
         public void setName(String name) {
             this.name = name;
         }
-        public String getDegree() {
+        public Integer getDegree() {
             return degree;
         }
-        public void setDegree(String degree) {
+        public void setDegree(Integer degree) {
             this.degree = degree;
         }
-        public Long getStart() {
+        public Date getStart() {
             return start;
         }
-        public void setStart(Long start) {
+        public void setStart(Date start) {
             this.start = start;
         }
-        public Long getEnd() {
+        public Date getEnd() {
             return end;
         }
-        public void setEnd(Long end) {
+        public void setEnd(Date end) {
             this.end = end;
         }
         @Override
