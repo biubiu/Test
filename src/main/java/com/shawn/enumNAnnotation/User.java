@@ -1,5 +1,6 @@
 package com.shawn.enumNAnnotation;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -9,13 +10,13 @@ import java.util.List;
  */
 public class User {
 
-    @CheckValue
+    @CheckValue(String.class)
     private String userName;
 
-    @CheckValue
+    @CheckValue(String.class)
     private String password;
 
-    @CheckValue
+    @CheckValue(String.class)
     private String email;
 
     private List<Work> works;
@@ -70,13 +71,13 @@ public class User {
     }
 
     public static class Work{
-        @CheckValue
+        @CheckValue(String.class)
         private String name;
-        @CheckValue
+        @CheckValue(String.class)
         private String position;
-        @CheckValue
+        @CheckValue(Long.class)
         private Long start;
-        @CheckValue
+        @CheckValue(Long.class)
         private Long end;
         public String getName() {
             return name;
@@ -111,13 +112,13 @@ public class User {
     }
 
     public static class Edu{
-        @CheckValue
+        @CheckValue(String.class)
         private String name;
-        @CheckValue
+        @CheckValue(String.class)
         private String degree;
-        @CheckValue
+        @CheckValue(Long.class)
         private Long start;
-        @CheckValue
+        @CheckValue(Long.class)
         private Long end;
         public String getName() {
             return name;

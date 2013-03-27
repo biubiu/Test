@@ -1,23 +1,27 @@
 package com.shawn.enumNAnnotation;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
+import com.google.common.base.Strings;
+
 /**
- * User: Shawn cao
- * Date: 13-3-24
- * Time: PM6:51
+ * User: Shawn cao Date: 13-3-24 Time: PM6:51
  */
 public class ReflectionListCheckTest {
 
     private static StringBuilder sb = new StringBuilder();
+
     public static void main(String[] args) throws IllegalArgumentException, IllegalAccessException {
 
         // set model from rest
         User resume = new User();
-       // resume.setEmail("fzxwolf@sina.com");
+        resume.setEmail("fzxwolf@sina.com");
         resume.setUserName("fzx");
         resume.setPassword("123456");
 
@@ -31,6 +35,7 @@ public class ReflectionListCheckTest {
         work2.setName("work2");
         work2.setPosition("position2");
         work2.setStart(13000000l);
+        work1.setEnd(12000000l);
 
         List<User.Work> works = new ArrayList<User.Work>();
         works.add(work1);
@@ -38,12 +43,13 @@ public class ReflectionListCheckTest {
 
         User.Edu edu1 = new User.Edu();
         edu1.setName("edu1");
+        edu1.setDegree("degree1");
         edu1.setStart(1300000l);
         edu1.setEnd(1200000l);
 
         User.Edu edu2 = new User.Edu();
-        edu2.setName("edu2");
-        edu2.setDegree("degree2");
+        //edu2.setName("edu2");
+        //edu2.setDegree("degree2");
         edu2.setStart(1300000l);
         edu2.setEnd(120000l);
 
@@ -56,30 +62,76 @@ public class ReflectionListCheckTest {
 
         System.out.println("before..edu.." +resume.getEdus().size());
         System.out.println("before..work.." +resume.getWorks().size());
-        filterThis(resume);
-        System.out.println(resume.getEdus().size());
-        System.out.println(resume.getWorks().size());
+        filter(resume);
+        System.out.println("after edu..." + resume.getEdus().size());
+        System.out.println("after work.." + resume.getWorks().size());
     }
 
-    public static void filterThis(final User userFromResume){
+    public static String filter(final User userFromResume) {
         try {
-            if(userFromResume!=null){
+            if (userFromResume != null) {
+                Class<?> clazz = userFromResume.getClass();
+                for (Field f : clazz.getDeclaredFields()) {
+                    f.setAccessible(true);
+                    // System.out.println(".........." +f);
+                    if (f.get(userFromResume) instanceof List<?>) {
+                        List<?> list = (List<?>) f.get(userFromResume);
+                        Iterator<?> iterator = list.iterator();
+                        while (iterator.hasNext()) {
+                            int count = 0;
+                            Object object = iterator.next();
+                            Field[] fields = object.getClass().getDeclaredFields();
+                            for (Field e : fields) {
+                                if (e.isAnnotationPresent(CheckValue.class)) {
+                                     e.setAccessible(true);
+                                    Class<?> clazzs = e.getAnnotation(CheckValue.class).value();
+                                  //  for (Class<?> claz : clazzs) {
+
+                                        if (clazzs.equals(String.class)&&Strings.isNullOrEmpty((String)e.get(object))){
+                                            System.out.println(".........." +e.get(object)+" | " + e.getName());
+                                            sb.append(object.getClass().getSimpleName()).append(":").append(FailReason.getReason(FailReason.valueOf(e.getName())));
+                                            iterator.remove();
+                                            break;
+                                        }else if(clazzs.getClass().equals(Long.class)&&e.get(object)==null){
+                                            ++count;
+                                            if(count>1){
+                                                System.out.println("count.." +count+" | " +object.getClass() + " | " + e.getName());
+                                                sb.append(object.getClass().getSimpleName()).append(":").append(FailReason.getReason(FailReason.valueOf(e.getName())));
+                                                iterator.remove();
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+        } catch (Exception e) {
+            return sb.toString();
+        }
+        System.out.println(sb.toString());
+        return sb.toString();
+    }
+
+    public static void filterThis(final User userFromResume) {
+        try {
+            if (userFromResume != null) {
                 Class clazz = userFromResume.getClass();
                 for (Field f : clazz.getDeclaredFields()) {
                     f.setAccessible(true);
-                    if(f.get(userFromResume) instanceof List<?>){
-                        List<?> list = (List<?>)f.get(userFromResume);
+                    if (f.get(userFromResume) instanceof List<?>) {
+                        List<?> list = (List<?>) f.get(userFromResume);
                         Iterator<?> iterator = list.iterator();
-                        while(iterator.hasNext()){
+                        while (iterator.hasNext()) {
                             Object object = iterator.next();
                             Field[] fields = object.getClass().getDeclaredFields();
-                            for(Field field : fields){
-                                if(field.isAnnotationPresent(CheckValue.class)){
+                            for (Field field : fields) {
+                                if (field.isAnnotationPresent(CheckValue.class)) {
                                     field.setAccessible(true);
-                                    if(field.get(object)==null){
-                                        sb.append(object.getClass().getSimpleName()).append(":").
-                                           append(FailReason.getReason(FailReason.valueOf(field.getName()))).
-                                           append(";");
+                                    if (field.get(object) == null) {
+                                        sb.append(object.getClass().getSimpleName()).append(":").append(FailReason.getReason(FailReason.valueOf(field.getName())))
+                                                .append(";");
                                         iterator.remove();
                                         break;
                                     }
@@ -95,22 +147,18 @@ public class ReflectionListCheckTest {
         System.out.println(sb.toString());
     }
 }
-enum FailReason{
-    userName("missiing user name"),
-    password("missing password"),
-    email("missing email"),
-    name("missing name"),
-    start("missing start time"),
-    end("missing end time"),
-    position("missing position"),
-    degree("missing degree");
+
+enum FailReason {
+    userName("missiing user name"), password("missing password"), email("missing email"), name("missing name"), start("missing start time"), end("missing end time"), position(
+            "missing position"), degree("missing degree");
 
     private String reason;
-    private FailReason(String reason){
+
+    private FailReason(String reason) {
         this.reason = reason;
     }
 
-    public static String getReason(FailReason failReason){
+    public static String getReason(FailReason failReason) {
         return failReason.reason;
     }
 }
