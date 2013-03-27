@@ -1,12 +1,9 @@
 package com.shawn.enumNAnnotation;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.base.Strings;
 
@@ -21,9 +18,11 @@ public class ReflectionListCheckTest {
 
         // set model from rest
         User resume = new User();
-        resume.setEmail("fzxwolf@sina.com");
-        resume.setUserName("fzx");
-        resume.setPassword("123456");
+
+         //resume.setEmail("fzxwolf@sina.com");
+      //  resume.setUserName("fzx");
+      //  resume.setPassword("123456");
+
 
         User.Work work1 = new User.Work();
         work1.setName("work1");
