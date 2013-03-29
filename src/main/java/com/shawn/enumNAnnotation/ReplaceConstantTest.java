@@ -17,7 +17,7 @@ public class ReplaceConstantTest {
 
     static void opSymbol(){
         for(Operation op:Operation.values()){
-            System.out.printf("op on %s is %s%n",op,op.show());
+            //System.out.printf("op on %s is %s%n",op,op.show());
         }
     }
     static void opTest(){
@@ -74,7 +74,11 @@ enum Plant{
 }
 
 
-enum Operation implements show{
+interface Show{
+       public  String show();
+  }
+
+enum Operation implements Show{
     PLUS("+"){
         @Override
         double apply(double x, double y) {
@@ -118,6 +122,3 @@ enum Operation implements show{
     }
 }
 
-interface show{
-     String show();
-}
