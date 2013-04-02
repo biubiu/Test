@@ -1,11 +1,9 @@
 package com.shawn.concurrent;
 
-import java.awt.print.Printable;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.lang.Thread.State;
+
+import com.google.common.eventbus.Subscribe;
 
 
 
@@ -63,7 +61,6 @@ public class BasicThreadTest {
              }
              pw.close();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         for (int i = 0; i < 10; i++) {
