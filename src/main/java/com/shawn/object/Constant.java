@@ -1,5 +1,7 @@
 package com.shawn.object;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Created with IntelliJ IDEA.
  * User: caocao024
@@ -17,6 +19,9 @@ public class Constant {
     static int number4= 6;
 
     public static void main(String[ ] args) {
+
+        WeakReference<Integer> ints = new WeakReference<Integer>(new Integer(4));
+        System.out.println(ints.get());
 
         int product1 = number1 * number2;         //line A
 

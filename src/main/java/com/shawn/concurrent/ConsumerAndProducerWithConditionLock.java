@@ -43,7 +43,7 @@ class BufferProducer implements  Runnable{
         this.buffer = buffer;
     }
 
-    @Override
+
     public void run() {
         buffer.setPendingLines(true);
         while(mock.hasMoreLines()){
@@ -60,7 +60,6 @@ class BufferCustomer implements  Runnable{
     BufferCustomer(Buffer buffer){
         this.buffer = buffer;
     }
-    @Override
     public void run() {
         while(buffer.hasPendingLines()){
             String line = buffer.get();

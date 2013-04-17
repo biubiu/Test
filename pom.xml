@@ -23,11 +23,11 @@
       <artifactId>mahout-math</artifactId>
       <version>${mahout.version}</version>
     </dependency>
-    <dependency>
+    <!-- <dependency>
     <groupId>${mahout.groupid}</groupId>
       <artifactId>mahout-math</artifactId>
       <version>${mahout.version}</version>
-    </dependency>
+    </dependency> -->
     <dependency>
       <groupId>${guava.groupid}</groupId>
       <artifactId>guava</artifactId>
