@@ -1,4 +1,4 @@
-package com.shawn.generalProgramming;
+package com.shawn.general;
 
 import java.util.Comparator;
 

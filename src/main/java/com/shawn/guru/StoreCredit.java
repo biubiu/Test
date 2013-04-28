@@ -14,7 +14,7 @@ public class StoreCredit {
     private int total = 0;
 
     public static void main(String[] args) {
-
+        System.out.printf("1212123  \r");
     }
 
     private void printOutput(List<Integer[]> ints) throws Exception {
