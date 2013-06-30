@@ -1,23 +1,51 @@
 package com.shawn.general;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.im4java.core.ConvertCmd;
 import org.im4java.core.IM4JavaException;
 import org.im4java.core.IMOperation;
 import org.im4java.process.Pipe;
 
+import com.sun.org.apache.bcel.internal.classfile.Field;
+
 public class ImageOperationTest {
 
-    public static void main(String[] args) {
-        ImageParam imageParam = new ImageParam();
+    public static void main(String[] args) throws IOException, InterruptedException, IM4JavaException {
+        String path="/var/image/temp/65498/apple.jpg";
+        File file = new File("/home/shawncao/image/small/65498/");
+
+        if(!file.exists()){
+            System.out.println(file.exists());
+            System.out.println(file.mkdirs());;
+        }
+        //System.out.println(path.lastIndexOf("/"));;
+        //String dir = path.substring(0,21);
+        //System.out.println(dir);
+
+       /* ImageParam imageParam = new ImageParam();
         imageParam.setHeight(100);
         imageParam.setWitdth(100);
         imageParam.setOperation(Operation.resize);
-        boolean flag=processImage("/home/shawncao/Desktop/logos/apple_2.jpg","/home/shawncao/Desktop/apple-small.jpg", imageParam);
-        System.out.println("finish"+ flag);
+        testImage(imageParam);*/
+        //boolean flag=processImage("/home/shawncao/Desktop/logos/apple_2.jpg","/home/shawncao/Desktop/apple-small.jpg", imageParam);
+        //System.out.println("finish"+ flag);
+    }
+    private static Matcher matcher;
+    private static final String IMAGE_FILE_NAME_PATTERN_STRING = "([^\\s]+(\\.(?i)(jpg|png|gif|bmp))$)";
+
+    private static Pattern pattern = Pattern.compile(IMAGE_FILE_NAME_PATTERN_STRING);
+
+    public static boolean validateFileName(final String image) {
+        matcher = pattern.matcher(image);
+        return matcher.matches();
     }
 
     public static boolean processImage(String imagePath, String targetPath, ImageParam imageParam) {
@@ -57,20 +85,32 @@ public class ImageOperationTest {
         return flag;
     }
 
-    public byte[] image(int height, int width, InputStream Stream) throws IOException, InterruptedException, IM4JavaException {
+
+    public static byte[] image(ImageParam imageParam, InputStream in) throws IOException, InterruptedException, IM4JavaException {
         IMOperation op = new IMOperation();
-        op.addImage("");
-        op.resize(width, height, ">");
-        Pipe pipeIn = new Pipe(Stream, null);
-        ByteArrayOutputStream fos = new ByteArrayOutputStream();
-        Pipe pipeOut = new Pipe(null, fos);
+        op.addImage("-");
+        op.resize(imageParam.getWitdth(), imageParam.getHeight());
+        op.addImage("-");
+        Pipe pipeIn = new Pipe(in, null);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        Pipe pipeOut = new Pipe(null, out);
 
         ConvertCmd convert = new ConvertCmd();
         convert.setInputProvider(pipeIn);
         convert.setOutputConsumer(pipeOut);
         convert.run(op);
-        Stream.close();
-        return fos.toByteArray();
+        in.close();
+        out.close();
+        return out.toByteArray();
+    }
+
+    public static void testImage(ImageParam imageParam) throws IOException, InterruptedException, IM4JavaException{
+        InputStream inputStream = new FileInputStream(new File("/home/shawncao/Desktop/logos/apple_2.jpg"));
+        byte[] out = image(imageParam,inputStream);
+        System.out.println("out" + out.length);
+        FileOutputStream outputStream = new FileOutputStream(new File("/home/shawncao/temp/small_apple.jpg"));
+        outputStream.write(out);
+        outputStream.close();
     }
 
     static class ImageParam{
@@ -110,8 +150,6 @@ public class ImageOperationTest {
         public void setHeight(int height) {
             this.height = height;
         }
-
-
     }
 
 }
