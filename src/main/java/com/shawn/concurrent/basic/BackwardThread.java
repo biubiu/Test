@@ -4,9 +4,24 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 public class BackwardThread {
+	
     public static void main(String[] args) throws InterruptedException {
-        Thread[] threads = new Thread[10];
+        runBySync();
+    }
+    
+    static SharedObject so = new SharedObject();
+    static void runBySync(){
+    	Thread[] threads = new Thread[10];
+    	for (int i = 0; i < threads.length; i++) {
+			threads[i] = new ThreadSync(i,so);
+			threads[i].start();
+		}
+    }
+    static void runByReentrantLock(){
+    	Thread[] threads = new Thread[10];
         Doc doc = new Doc();
         for( int i=0; i< threads.length; i++){
             threads[i] = new Thread(new DocPrint(i, doc),i+"");
@@ -15,6 +30,52 @@ public class BackwardThread {
     }
 }
 
+class ThreadSync extends Thread{
+	SharedObject sharedObject;
+	int num;
+	public ThreadSync(int i,SharedObject sharedObject) {
+		this.sharedObject =sharedObject;
+		num = i;
+	}
+	
+	@Override
+	public void run() {	
+		sharedObject.printSelf(num);
+	}
+}
+
+class SharedObject {
+	private Integer numberOfThreads = 10;
+	//private final Object mutex = new Object(); 
+	public void printSelf(int num){
+		/*try {
+			TimeUnit.SECONDS.sleep(1);
+			System.out.println("in sleep");
+		} catch (InterruptedException e) {				
+			e.printStackTrace();
+		}*/
+		//System.out.println(this.toString());
+		synchronized (this) {
+			while((num+1) != numberOfThreads){
+				try {
+					wait();
+				} catch (InterruptedException e) {					
+					e.printStackTrace();
+				}
+			}
+			System.out.println( num + " "+Thread.currentThread().getName());			
+			
+			numberOfThreads--;
+			notifyAll();
+		}		
+	}
+	
+	@Override
+	public String toString() {	
+		return ""+this.hashCode();
+	}
+	
+}
 class DocPrint implements Runnable{
     private Doc doc;
     private int id;
