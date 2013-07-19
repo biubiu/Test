@@ -1,8 +1,8 @@
 package com.shawn.concurrent.atomic;
 
-public class ReordingDemo {
+public class ReorderingDemo { 
 
-	static int x = 0, y = 0, a = 0, b = 0; 
+    static int x = 0, y = 0, a = 0, b = 0; 
 
     public static void main(String[] args) throws Exception { 
 
@@ -22,9 +22,11 @@ public class ReordingDemo {
             };
             one.start();
             two.start();
-            one.join();
-            two.join();
+            //one.join();
+            //two.join();
             System.out.println(x + " " + y);
-        }
+            
+        }                
     } 
+
 }
