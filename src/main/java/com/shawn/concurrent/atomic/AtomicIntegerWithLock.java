@@ -100,7 +100,7 @@ public class AtomicIntegerWithLock {
     static int staticValue = 0;
     public static void main(String[] args) throws Exception{
          final int max = 10;
-         final int loopCount = 100000;
+         final int loopCount = 1000;
          long costTime = 0;
          for (int m = 0; m < max; m++) {
              long start1 = System.nanoTime();
