@@ -1,10 +1,7 @@
 package com.shawn.concurrent.basic;
 
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
-
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 public class BackwardThread {
 	
