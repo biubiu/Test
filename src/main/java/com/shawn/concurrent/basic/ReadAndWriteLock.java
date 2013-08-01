@@ -69,8 +69,6 @@ class PriceInfo {
     public PriceInfo() {
         price1 = 1.0;
         price2 = 2.0;
-        //lock = new ReentrantReadWriteLock();
-        //with fairness
         lock = new ReentrantReadWriteLock(true);
     }
 

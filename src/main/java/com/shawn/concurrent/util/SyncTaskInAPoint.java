@@ -10,7 +10,7 @@ public class SyncTaskInAPoint {
         final int SEARCH = 5;
         final int PARTICIPANT =5;
         final int LINES_PARTICIPANT=2000;
-
+        
         MatrixMock mock = new MatrixMock(ROWS, NUMBERS,SEARCH);
         Results results = new Results(ROWS);
 
@@ -87,12 +87,16 @@ class Searcher implements Runnable{
     }
 
 }
+
+//generate a random matrix of numbers between one and 10 where the threads are going to look for a number.
 class MatrixMock {
     private int data[][];
 
+    //Each time you generate a number, compare it with the number you are going to look for. 
+    //If they are equal, increment the counter.
     public MatrixMock(int size, int length, int number) {
         int counter = 0;
-        data = new int[size][length];
+        data = new int[size][length];        
         Random random = new Random();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < length; j++) {
@@ -112,7 +116,7 @@ class MatrixMock {
     }
 }
 
-
+//store the number of occurrence of the searched number in each row of matrix
 class Results{
     private int data[];
 
