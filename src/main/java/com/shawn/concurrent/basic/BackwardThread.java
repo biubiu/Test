@@ -5,11 +5,12 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class BackwardThread {
-	
+
     public static void main(String[] args) throws InterruptedException {
         runBySync();
+        //runByReentrantLock();
     }
-    
+
     static SharedObject so = new SharedObject();
     static void runBySync(){
     	Thread[] threads = new Thread[10];
@@ -17,29 +18,31 @@ public class BackwardThread {
 			threads[i] = new ThreadSync(i,so);
 			threads[i].start();
 		}    	
+
     }
     static void runByReentrantLock(){
-    	Thread[] threads = new Thread[10];
+        Thread[] threads = new Thread[10];
         Doc doc = new Doc();
         for( int i=0; i< threads.length; i++){
             threads[i] = new Thread(new DocPrint(i, doc),i+"");
             threads[i].start();
+            //threads[i].
         }
     }
 }
 
 class ThreadSync extends Thread{
-	SharedObject sharedObject;
-	int num;
-	public ThreadSync(int i,SharedObject sharedObject) {
-		this.sharedObject =sharedObject;
-		num = i;
-	}
-	
-	@Override
-	public void run() {	
-		sharedObject.printSelf(num);
-	}
+    SharedObject sharedObject;
+    int num;
+    public ThreadSync(int i,SharedObject sharedObject) {
+        this.sharedObject =sharedObject;
+        num = i;
+    }
+
+    @Override
+    public void run() {
+        sharedObject.printSelf(num);
+    }
 }
 
 class SharedObject {
@@ -71,8 +74,7 @@ class SharedObject {
 			}
 			System.out.println( num + " "+Thread.currentThread().getName());			
 			numberOfThreads--;
-			notifyAll();
-			
+			notifyAll();			
 		}		
 	}	
 }
