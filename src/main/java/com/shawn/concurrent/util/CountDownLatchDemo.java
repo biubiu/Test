@@ -4,15 +4,20 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 public class CountDownLatchDemo {
-    public static void main(String[] args) {
-        VideoConference conference = new VideoConference(10);
+	
+    public static void main(String[] args) throws InterruptedException {    
+    	CountDownLatch startLatch = new CountDownLatch(1);
+        VideoConference conference = new VideoConference(10,startLatch);
         Thread threadConference = new Thread(conference);
         threadConference.start();
+        
         for (int i = 0; i < 10; i++) {
             Participant participant = new Participant(conference, "participant " + i);
             Thread thread = new Thread(participant);
-            thread.start();
-        }
+            thread.start();         
+        }            
+        startLatch.await();
+        System.out.println("Video conference started ");
     }
 }
 
@@ -20,11 +25,11 @@ public class CountDownLatchDemo {
 
 class VideoConference implements Runnable{
 
-    private final CountDownLatch controller;
-    
-    public VideoConference(int number) {
-        controller = new CountDownLatch(number);
-        
+    private final CountDownLatch controller;    
+    private CountDownLatch startLatch;
+    public VideoConference(int number,CountDownLatch startLatch) {
+        controller = new CountDownLatch(number); 
+        this.startLatch = startLatch;
     }
 
     public void arrive(String name){
@@ -37,7 +42,8 @@ class VideoConference implements Runnable{
         try {
             controller.await();
             System.out.printf("Video conference: All the participants have come \n ");
-            System.out.printf("Video conference: Let's start...\n");
+            System.out.printf("Video conference: It's ready...\n");
+            startLatch.countDown();
         } catch (Exception e) {
             e.printStackTrace();
         }
