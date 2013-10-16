@@ -6,9 +6,9 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class BackwardThread {
 
-    public static void main(String[] args) throws InterruptedException {
-        runBySync();
-        //runByReentrantLock();
+    public static void main(String[] args) throws InterruptedException {    	
+        //runBySync();                
+        runByReentrantLock();
     }
 
     static SharedObject so = new SharedObject();
@@ -46,6 +46,7 @@ class ThreadSync extends Thread{
 }
 
 class SharedObject {
+	
 	private Integer numberOfThreads = 10;
 	//private final Object mutex = new Object(); 
 	public void printSelf(int num){
@@ -103,14 +104,13 @@ class Doc {
     }
 
     public void printSelf(int id) {
-
         lock.lock();
         try {         
             while(id+1 != numOfThread) {
-                System.out.printf("%s is waiting...\n",Thread.currentThread().getName());
+                //System.out.printf("%s is waiting...\n",Thread.currentThread().getName());
                 number.await();
             }
-            System.out.printf("thread %s is executing \n", Thread.currentThread().getName());
+        	System.out.println( id + " "+Thread.currentThread().getName());            
             numOfThread--;
            number.signalAll();            
         } catch (InterruptedException e) {

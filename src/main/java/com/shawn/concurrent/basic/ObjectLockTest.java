@@ -29,8 +29,7 @@ public class ObjectLockTest {
 
 
 class ListHelper<E>{
-	public List<E> list = Collections.synchronizedList(new LinkedList<E>());
-	
+	public List<E> list = Collections.synchronizedList(new LinkedList<E>());	
 	public  boolean putIfAbsent(E x){
 		synchronized (list) {
 			boolean absent = !list.contains(x);
