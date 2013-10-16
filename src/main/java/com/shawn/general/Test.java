@@ -1,10 +1,14 @@
 package com.shawn.general;
 
+import java.util.Locale;
+
+
 public class Test {
     public static void main(String[] args) {
         String[] strs = getLocation("CN-11-北京,CN-12-上海");
         System.out.println("province: " + strs[0]);
         System.out.println("province: " + strs[1]);
+        System.out.println(Locale.CHINA.toString());
     }
 
     public static String[] getLocation(String location) {
