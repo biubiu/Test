@@ -2,6 +2,7 @@ package com.shawn.nio;
 
 import java.io.*;
 import java.nio.file.Paths;
+import java.util.jar.JarFile;
 
 /**
  * User: Shawn cao
@@ -28,6 +29,5 @@ public class FilterStreamTest {
             }
 
         }
-
     }
 }
