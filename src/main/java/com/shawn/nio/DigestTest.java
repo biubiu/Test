@@ -1,7 +1,5 @@
 package com.shawn.nio;
 
-import sun.security.util.BigInt;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
