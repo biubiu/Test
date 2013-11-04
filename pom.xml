@@ -9,6 +9,8 @@
                 <mahout.groupid>org.apache.mahout</mahout.groupid>
                 <guava.version>15.0</guava.version>
                 <guava.groupid>com.google.guava</guava.groupid>
+                <maven.compiler.source>1.7</maven.compiler.source>
+                <maven.compiler.target>1.7</maven.compiler.target>
         </properties>
         <dependencies>
                 <dependency>
@@ -21,11 +23,27 @@
                         <artifactId>mahout-math</artifactId>
                         <version>${mahout.version}</version>
                 </dependency>
-                <!-- <dependency> <groupId>${mahout.groupid}</groupId> <artifactId>mahout-math</artifactId> <version>${mahout.version}</version> </dependency> -->
                 <dependency>
                         <groupId>${guava.groupid}</groupId>
                         <artifactId>guava</artifactId>
                         <version>${guava.version}</version>
+                </dependency>
+                <dependency>
+                        <groupId>junit</groupId>
+                        <artifactId>junit</artifactId>
+                        <version>4.11</version>
+                </dependency>
+                <dependency>
+                        <groupId>org.hamcrest</groupId>
+                        <artifactId>hamcrest-core</artifactId>
+                        <version>1.3</version>
+                        <scope>test</scope>
+                </dependency>
+                <dependency>
+                        <groupId>org.hamcrest</groupId>
+                        <artifactId>hamcrest-library</artifactId>
+                        <version>1.3</version>
+                        <scope>test</scope>
                 </dependency>
                 <dependency>
                         <groupId>org.slf4j</groupId>
@@ -41,11 +59,6 @@
                         <groupId>org.apache.commons</groupId>
                         <artifactId>commons-lang3</artifactId>
                         <version>3.1</version>
-                </dependency>
-                <dependency>
-                        <groupId>junit</groupId>
-                        <artifactId>junit</artifactId>
-                        <version>4.11</version>
                 </dependency>
                 <dependency>
                         <groupId>org.codehaus.jackson</groupId>
