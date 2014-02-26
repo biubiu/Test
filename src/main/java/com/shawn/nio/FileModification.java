@@ -12,6 +12,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * User: Shawn cao
@@ -25,8 +26,8 @@ public class FileModification {
        // readFile();
        // writeFile();
        //simpleRead();
-       //watchService();
-        seekByChannel();
+       watchService();
+       //seekByChannel();
     }
 
     public static void writeFile(){
@@ -60,12 +61,12 @@ public class FileModification {
     public static void  watchService(){
         try {
             WatchService watcher = FileSystems.getDefault().newWatchService();
-            WatchKey watchKey= Paths.get("/Users/caocao024").register(watcher,StandardWatchEventKinds.ENTRY_MODIFY);
+            WatchKey watchKey= Paths.get("/Users/caocao024/Desktop").register(watcher,StandardWatchEventKinds.ENTRY_MODIFY);
             while(true) {
-                watchKey = watcher.take();
-                for(WatchEvent<?> event:watchKey.pollEvents()){
+                //watchKey = watcher.take();
+                for(WatchEvent<?> event:watcher.poll(10, TimeUnit.MILLISECONDS).pollEvents()){
                     if(event.kind() == StandardWatchEventKinds.ENTRY_MODIFY){
-                        System.out.println("home dir changed");
+                        System.out.println("====" + event.context() + " | " + event.count() );
                     }
                 }
                 watchKey.reset();
