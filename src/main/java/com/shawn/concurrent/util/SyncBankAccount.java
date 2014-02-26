@@ -2,7 +2,7 @@ package com.shawn.concurrent.util;
 
 public class SyncBankAccount {
     public static void main(String[] args) {
-        Account account = new Account();
+        Accounts account = new Accounts();
         account.setBalance(1000);
         Company company = new Company(account);
         Thread companyThread = new Thread(company);
@@ -25,9 +25,9 @@ public class SyncBankAccount {
 }
 
 class Company implements Runnable {
-    private Account account;
+    private Accounts account;
 
-    public Company(Account account) {
+    public Company(Accounts account) {
         this.account = account;
     }
 
@@ -41,9 +41,9 @@ class Company implements Runnable {
 
 class Bank implements Runnable {
 
-    private Account account;
+    private Accounts account;
 
-    public Bank(Account account) {
+    public Bank(Accounts account) {
         this.account = account;
     }
 
@@ -55,7 +55,7 @@ class Bank implements Runnable {
 
 }
 
-class Account {
+class Accounts {
     private double balance;
 
     public double getBalance() {

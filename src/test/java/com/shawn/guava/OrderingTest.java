@@ -1,20 +1,17 @@
 package com.shawn.guava;
 
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-
-import org.junit.Test;
-import org.junit.experimental.theories.suppliers.TestedOn;
-import org.springframework.util.StringUtils;
-
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.hamcrest.Matchers.*;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Test;
+import org.springframework.util.StringUtils;
 
 import com.google.common.base.Functions;
 import com.google.common.collect.Lists;
