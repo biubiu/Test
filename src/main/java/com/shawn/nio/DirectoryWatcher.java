@@ -85,14 +85,6 @@ public class DirectoryWatcher {
                 System.out.println("END");
             }
         });
-/*       while (true) {
-            Path p = fs.getPath("build/end");
-            if (Files.isReadable(p)) {
-                ws.close();
-                service.shutdownNow();
-                break;
-            }
-        }   */
     }
 
     static void walk(Path root, final Map<WatchKey, Path> keys,
