@@ -1,11 +1,13 @@
 package com.shawn.template;
 
 
-import static org.junit.Assert.assertEquals;
+
+import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
-public class TestTemplateParse {
+public class TestTemplateParse extends TestCase {
 
     @Test
     public void emptyTemplateRendersAsEmptyString(){
