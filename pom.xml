@@ -7,7 +7,7 @@
         <properties>
                 <mahout.version>0.7</mahout.version>
                 <mahout.groupid>org.apache.mahout</mahout.groupid>
-                <guava.version>15.0</guava.version>
+                <guava.version>17.0</guava.version>
                 <guava.groupid>com.google.guava</guava.groupid>
         </properties>
         <dependencies>
@@ -97,6 +97,12 @@
             <groupId>com.github.jbellis</groupId>
             <artifactId>jamm</artifactId>
             <version>0.2.7-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.12.6</version>
+                <scope>provided</scope>
             </dependency>
         </dependencies>
 

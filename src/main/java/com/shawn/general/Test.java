@@ -17,7 +17,6 @@ public class Test {
     final private static int ITERS =  100_000;
     public static void main(String[] args) throws Exception{
 
-
         //System.out.println(splitLongInt(654243441));
 
         //long start = System.currentTimeMillis();
