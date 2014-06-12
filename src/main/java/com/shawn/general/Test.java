@@ -2,9 +2,11 @@ package com.shawn.general;
 
 
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
 import java.util.List;
-
-import org.springframework.util.StringUtils;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
@@ -15,7 +17,15 @@ import com.google.common.collect.Lists;
 public class Test {
     final private static char seperator = ',';
     final private static int ITERS =  100_000;
+
+
     public static void main(String[] args) throws Exception{
+
+
+        String IP = InetAddress.getLocalHost().getHostAddress();
+        System.out.println(IP);
+        System.out.println(Integer.MAX_VALUE);
+
 
         //System.out.println(splitLongInt(654243441));
 
@@ -47,8 +57,9 @@ public class Test {
         System.out.println("end : " + (System.currentTimeMillis()-start2) + " | "+ res.length());*/
         //System.out.println(StringUtils.collectionToDelimitedString(res, "--"));
 
-        String string = "";
-        System.out.println(StringUtils.collectionToCommaDelimitedString(Lists.newArrayList(string.split(","))));
+        //String string = "";
+        //System.out.println(StringUtils.collectionToCommaDelimitedString(Lists.newArrayList(string.split(","))));
+
     }
 
     private static Iterable<String> split2(final String commaStr){
