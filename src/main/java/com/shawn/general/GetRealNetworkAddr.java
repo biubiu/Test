@@ -19,7 +19,7 @@ public class GetRealNetworkAddr {
                     InetAddress inetAddr = (InetAddress) inetAddrs.nextElement();
                     if (!inetAddr.isLoopbackAddress()) {
 
-                        if (inetAddr.isSiteLocalAddress()) {
+                        if (inetAddr.isSiteLocalAddress() ) {
                             // Found non-loopback site-local address. Return it immediately...
                             return inetAddr;
                         }

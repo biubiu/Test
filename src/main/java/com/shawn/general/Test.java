@@ -5,13 +5,16 @@ package com.shawn.general;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Set;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 
 public class Test {
@@ -20,12 +23,16 @@ public class Test {
 
 
     public static void main(String[] args) throws Exception{
+        Set<Integer> companyIds = Sets.newLinkedHashSetWithExpectedSize(31);
+        /*companyIds.add(1);
+        companyIds.add(2);*/
+        Set<Integer> ids = Sets.newLinkedHashSet(Arrays.asList(1,2,3,4));
 
-
-        String IP = InetAddress.getLocalHost().getHostAddress();
+        System.out.println(companyIds.size() + " | " + ids.size());
+      /*  String IP = InetAddress.getLocalHost().getHostAddress();
         System.out.println(IP);
         System.out.println(Integer.MAX_VALUE);
-
+*/
 
         //System.out.println(splitLongInt(654243441));
 
