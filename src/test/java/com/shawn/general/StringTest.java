@@ -19,6 +19,12 @@ public class StringTest {
 
     }
 
+    @Test
+    public void testBitShift(){
+        int i = 2118123;
+        System.out.println((i>>31)&1);
+    }
+
     public static String stringReplace(String text){
         text = text.replace("j","l");
         return text;
