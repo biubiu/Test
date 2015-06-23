@@ -14,8 +14,6 @@ import org.im4java.core.IM4JavaException;
 import org.im4java.core.IMOperation;
 import org.im4java.process.Pipe;
 
-import com.sun.org.apache.bcel.internal.classfile.Field;
-
 public class ImageOperationTest {
 
     public static void main(String[] args) throws IOException, InterruptedException, IM4JavaException {
@@ -118,12 +116,12 @@ public class ImageOperationTest {
         int y = 0;
         int witdth;
         int height;
-        Operation operation;
+        Modify operation;
 
-        public Operation getOperation() {
+        public Modify getOperation() {
             return operation;
         }
-        public void setOperation(Operation operation) {
+        public void setOperation(Modify operation) {
             this.operation = operation;
         }
         public int getX() {
@@ -154,7 +152,7 @@ public class ImageOperationTest {
 
 }
 
-enum Operation{
+enum Modify {
     cut,
     resize;
 }

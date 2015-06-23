@@ -1,6 +1,13 @@
 package com.shawn.general;
 
+import com.google.common.base.Charsets;
 import org.junit.Test;
+import org.springframework.web.util.UriUtils;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+
 /**
  * User: Shawn cao
  * Date: 14-5-26
@@ -19,6 +26,13 @@ public class StringTest {
 
     }
 
+    @Test
+    public void testUrlEncoding() throws UnsupportedEncodingException {
+        String query = URLEncoder.encode("sourceLink=+http://www.51zhucai.com/zhiwei/job167307.html&applyId=123", Charsets.UTF_8.name());
+        System.out.println(query);
+        String tran = URLDecoder.decode(query,Charsets.UTF_8.name());
+        System.out.println(tran);
+    }
     @Test
     public void testBitShift(){
         int i = 2118123;
