@@ -7,6 +7,7 @@ import org.springframework.web.util.UriUtils;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Optional;
 
 /**
  * User: Shawn cao
@@ -24,6 +25,15 @@ public class StringTest {
         String str2 = "aaa";
         System.out.println(str2.hashCode());
 
+        System.out.println(fizzBuzz(15));
+        System.out.println(fizzBuzz(10));
+        System.out.println(fizzBuzz(77));
+    }
+
+
+    public static String fizzBuzz(int number){
+        String result = Optional.of(number).map(n -> (n%3 == 0 ? "fizz": "") + (n % 5 == 0 ? "Buzz" : "")).get();
+        return result.isEmpty() ? Integer.toString(number) : result;
     }
 
     @Test

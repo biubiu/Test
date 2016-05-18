@@ -1,5 +1,9 @@
 package com.shawn.classNInterface;
 
-public class MinimizeAccessTest {
+import java.util.Random;
 
+public class MinimizeAccessTest {
+    public static void main(String[] args) {
+        
+    }
 }
